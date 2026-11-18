@@ -183,6 +183,21 @@ function mouseDragged() {
   return pressOnCanvas ? false : undefined;
 }
 
+// Touch screens: p5 does not call the mouse functions when a finger lands or
+// moves, so the touch handlers share them. A press on the canvas returns false,
+// which also stops the browser from sending a second, emulated click.
+function touchStarted(event) {
+  return mousePressed(event);
+}
+
+function touchMoved() {
+  return mouseDragged();
+}
+
+function touchEnded() {
+  mouseReleased();
+}
+
 function doubleClicked(event) {
   if (event && event.target !== canvasEl) return;
   const hit = portalAt(mouseX, mouseY);

@@ -51,7 +51,7 @@ scene, and brightens when you point at it; on touch screens it is always fully v
 | **Click** or **tap** | | Opens a portal where you click, up to **six**. When all six are open, a red ring says so. |
 | <kbd>Shift</kbd> + **click** | | Opens a push portal, whichever kind <kbd>P</kbd> is set to. |
 | **Drag** a portal | | Grab a portal by its middle and move it. |
-| **Double-click** a portal | | Closes it. |
+| **Double-click** a portal | | Closes it (with a mouse). |
 | <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> | Calm · Chaos · Nebula | Switches the mode. |
 | <kbd>P</kbd> | Pull / Push portals | What the next click opens: a pull portal or a push portal. |
 | <kbd>G</kbd> | Gravity | Orb gravity: the orb pulls nearby particles along behind it. |
@@ -165,14 +165,16 @@ in a headless browser.
 
 - **Chaos at its limit is heavy.** 1,400 particles, each feeling six portals, is the most work the sketch does. A
   recent laptop keeps up; an older phone may slow down. Calm and Nebula stay lighter.
-- **Double-clicking an empty spot** opens a portal on the first click and closes it on the second, leaving only a red
-  ring. Double-click a portal you want to close, not empty space.
+- **Closing a portal needs a mouse.** Double-clicking a portal closes it; on a touch screen there is no double-tap
+  yet, so use Reset to clear portals. Double-clicking an empty spot opens a portal and closes it again, leaving only a
+  red ring.
 - **It needs a network connection the first time**, to load p5.js from jsDelivr.
 
 ## Changelog
 
-**November 2026: the upgrade.** The December 2025 final project, grown into a fuller playground. Every original
-control and number works as it did: Move, Hold, Click (up to six portals), 1, 2, C and R.
+**November 2026: the upgrade.** The December 2025 final project, grown into a fuller playground. The original
+controls and numbers are kept: Move, Hold, Click (up to six portals), 1, 2, C and R. The one change is that pressing
+on an open portal now grabs it to move it, instead of opening a second portal on top of it.
 
 - **Nebula** (<kbd>3</kbd>): a third mode with rainbow particles drawn with additive blending.
 - **Push portals** (<kbd>P</kbd>, or <kbd>Shift</kbd> + click): amber portals that push particles out and leave a clear eye.
