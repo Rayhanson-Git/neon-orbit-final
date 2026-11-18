@@ -1,0 +1,30 @@
+# One-off: check what the live sites serve. Deleted right after.
+name: Live site check
+on:
+  push:
+    paths: ['.github/workflows/live-check.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          check() {
+            url="$1"; marker="$2"; extra="$3"
+            final=$(curl -sL -o /tmp/body -w '%{http_code} %{url_effective} redirects=%{num_redirects}' --max-time 30 "$url")
+            server=$(curl -sIL --max-time 30 "$url" | grep -i '^server:' | tail -1 | tr -d '\r')
+            if grep -q "$marker" /tmp/body; then m=yes; else m=no; fi
+            x=""
+            if [ -n "$extra" ]; then
+              js=$(curl -sL --max-time 30 "$extra"); if echo "$js" | grep -q "$marker"; then x="extra=yes"; else x="extra=no"; fi
+            fi
+            echo "::notice title=$url::$final | $server | marker '$marker' in page: $m $x"
+          }
+          check https://orbit-playground.rayhanson.tech/ 'id="dock"'
+          check https://neon-orbit.rayhanson.tech/ 'dock-nebula'
+          check https://wasp-dodge.rayhanson.tech/ 'POWERUP' https://wasp-dodge.rayhanson.tech/sketch.js
+          check https://gesture-particles.rayhanson.tech/ 'favicon.svg'
+          check https://virtual-theremin.rayhanson.tech/ 'Loop a bar'
+          check https://rayhanson.tech/projects/virtual-theremin/ 'Start with the camera'
+          check https://rayhanson.tech/neon-orbit-final/ 'neon-orbit.rayhanson.tech'
