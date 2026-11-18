@@ -51,7 +51,7 @@ scene, and brightens when you point at it; on touch screens it is always fully v
 | **Click** or **tap** | | Opens a portal where you click, up to **six**. When all six are open, a red ring says so. |
 | <kbd>Shift</kbd> + **click** | | Opens a push portal, whichever kind <kbd>P</kbd> is set to. |
 | **Drag** a portal | | Grab a portal by its middle and move it. |
-| **Double-click** a portal | | Closes it (with a mouse). |
+| **Double-click** or **double-tap** a portal | | Closes it. |
 | <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> | Calm · Chaos · Nebula | Switches the mode. |
 | <kbd>P</kbd> | Pull / Push portals | What the next click opens: a pull portal or a push portal. |
 | <kbd>G</kbd> | Gravity | Orb gravity: the orb pulls nearby particles along behind it. |
@@ -154,6 +154,7 @@ style.css         full-screen canvas, the guide panel and the dock
 favicon.svg       the tab icon
 assets/           README images: hero, diagrams, screenshots, the demo recording and the social preview
 design/           the script that draws the SVGs in assets/ (npm install && npm run build)
+docs/             a redirect from the repository's GitHub Pages address to neon-orbit.rayhanson.tech
 ```
 
 The SVG illustrations are written by [`design/artwork.mjs`](design/artwork.mjs) in the Rayhanson palette, with every
@@ -165,9 +166,8 @@ in a headless browser.
 
 - **Chaos at its limit is heavy.** 1,400 particles, each feeling six portals, is the most work the sketch does. A
   recent laptop keeps up; an older phone may slow down. Calm and Nebula stay lighter.
-- **Closing a portal needs a mouse.** Double-clicking a portal closes it; on a touch screen there is no double-tap
-  yet, so use Reset to clear portals. Double-clicking an empty spot opens a portal and closes it again, leaving only a
-  red ring.
+- **Double-clicking an empty spot** opens a portal on the first click and closes it on the second, leaving only a red
+  ring. Double-click (or double-tap) a portal you want to close, not empty space.
 - **It needs a network connection the first time**, to load p5.js from jsDelivr.
 
 ## Changelog
@@ -178,7 +178,7 @@ on an open portal now grabs it to move it, instead of opening a second portal on
 
 - **Nebula** (<kbd>3</kbd>): a third mode with rainbow particles drawn with additive blending.
 - **Push portals** (<kbd>P</kbd>, or <kbd>Shift</kbd> + click): amber portals that push particles out and leave a clear eye.
-- **Move and close portals**: drag a portal by its middle; double-click to close it.
+- **Move and close portals**: drag a portal by its middle; double-click or double-tap to close it.
 - **Orb gravity** (<kbd>G</kbd>): the orb pulls particles along behind it.
 - **The dock**: every control as a button, so it plays on phones and tablets too.
 - **Remembered settings**: mode, portal kind and gravity are kept between visits.

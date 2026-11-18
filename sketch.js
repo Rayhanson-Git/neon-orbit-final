@@ -9,7 +9,7 @@
 //   Click / tap           open a portal (up to six)
 //   Shift + click         open a push portal, whatever P is set to
 //   Drag a portal         move it
-//   Double-click a portal close it
+//   Double-click a portal close it (double-tap on touch screens)
 //   1 / 2 / 3             Calm, Chaos or Nebula
 //   P                     next portals pull (in) or push (out)
 //   G                     orb gravity: the orb pulls particles along behind it
@@ -186,7 +186,21 @@ function mouseDragged() {
 // Touch screens: p5 does not call the mouse functions when a finger lands or
 // moves, so the touch handlers share them. A press on the canvas returns false,
 // which also stops the browser from sending a second, emulated click.
+// a second tap on the same portal within this many ms closes it
+const DOUBLE_TAP_MS = 350;
+let lastTap = { at: -Infinity, portal: null };
+
 function touchStarted(event) {
+  if (event && event.target === canvasEl) {
+    const hit = portalAt(mouseX, mouseY);
+    const now = millis();
+    if (hit && hit === lastTap.portal && now - lastTap.at < DOUBLE_TAP_MS) {
+      closePortal(hit);
+      lastTap = { at: -Infinity, portal: null };
+      return false;
+    }
+    lastTap = { at: now, portal: hit };
+  }
   return mousePressed(event);
 }
 
@@ -201,11 +215,14 @@ function touchEnded() {
 function doubleClicked(event) {
   if (event && event.target !== canvasEl) return;
   const hit = portalAt(mouseX, mouseY);
-  if (hit) {
-    portals.splice(portals.indexOf(hit), 1);
-    rings.push(new Ring(hit.pos.x, hit.pos.y, true, true));
-  }
+  if (hit) closePortal(hit);
   return false;
+}
+
+function closePortal(portal) {
+  portals.splice(portals.indexOf(portal), 1);
+  rings.push(new Ring(portal.pos.x, portal.pos.y, true, true));
+  if (dragging === portal) dragging = null;
 }
 
 function keyPressed() {
