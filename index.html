@@ -2,19 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Neon Orbit Arcade</title>
+  <meta name="description" content="A glowing particle playground. The cursor becomes an orb, clicks open portals, and one key shifts the scene from calm to chaos." />
+  <meta name="theme-color" content="#05060a" />
+  <meta name="author" content="Harvey Rayhanson" />
+  <meta property="og:title" content="Neon Orbit Arcade" />
+  <meta property="og:description" content="A cursor, a trail, a little controlled chaos." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://neon-orbit.rayhanson.tech/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Rayhanson-Git/neon-orbit-final/main/assets/social.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css" />
-
-  <!-- p5.js CDN -->
+  <!-- p5.js, pinned -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
 </head>
-
 <body>
   <main id="wrap">
-    <!-- p5 will insert the canvas here -->
+    <noscript>Neon Orbit Arcade needs JavaScript to draw its canvas.</noscript>
   </main>
-
+  <aside id="guide" aria-label="How to play">
+    <h1>Neon Orbit Arcade</h1>
+    <p class="wide">Move: orb · Hold: emit · Click: portal (up to 6) · Drag: move it · Double-click: close it</p>
+    <p class="wide"><kbd>1</kbd> Calm · <kbd>2</kbd> Chaos · <kbd>3</kbd> Nebula · <kbd>P</kbd> pull / push · <kbd>Shift</kbd>+click push · <kbd>G</kbd> orb gravity</p>
+    <p class="wide"><kbd>C</kbd> clear · <kbd>R</kbd> reset · <kbd>Space</kbd> pause · <kbd>S</kbd> save · <kbd>H</kbd> hide this guide</p>
+    <p class="narrow">Hold to emit · tap to open a portal · drag one to move it</p>
+    <p id="status" role="status" aria-live="off">Calm · 0 / 6 portals · 0 / 900 particles</p>
+  </aside>
+  <nav id="dock" aria-label="Controls">
+    <button id="dock-calm" type="button" title="Calm (1)" aria-pressed="true"><span>Calm</span></button>
+    <button id="dock-chaos" type="button" title="Chaos (2)" aria-pressed="false"><span>Chaos</span></button>
+    <button id="dock-nebula" type="button" title="Nebula (3)" aria-pressed="false"><span>Nebula</span></button>
+    <span class="sep" aria-hidden="true"></span>
+    <button id="dock-kind" type="button" title="Next portals pull or push (P)" aria-pressed="false"><span>Pull portals</span></button>
+    <button id="dock-gravity" type="button" title="Orb gravity (G)" aria-pressed="false"><span>Gravity</span></button>
+    <button id="dock-pause" type="button" title="Pause (Space)" aria-pressed="false"><span>Pause</span></button>
+    <span class="sep" aria-hidden="true"></span>
+    <button id="dock-clear" type="button" title="Clear particles (C)"><span>Clear</span></button>
+    <button id="dock-reset" type="button" title="Reset everything (R)"><span>Reset</span></button>
+    <button id="dock-save" type="button" title="Save a PNG (S)"><span>Save</span></button>
+    <button id="dock-guide" type="button" title="Show or hide the guide (H)" aria-pressed="true"><span>Guide</span></button>
+  </nav>
   <script src="sketch.js"></script>
 </body>
 </html>

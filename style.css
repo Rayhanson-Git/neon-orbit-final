@@ -1,11 +1,133 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   background: #05060a;
+  color: #bedcff;
   overflow: hidden;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 canvas {
   display: block;
+  cursor: none; /* the orb is the cursor */
+  /* no scrolling, zooming or text selection while drawing on touch screens */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
+
+noscript {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+/* ---- the guide ---- */
+#guide {
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top));
+  left: max(10px, env(safe-area-inset-left));
+  max-width: calc(100vw - 20px);
+  box-sizing: border-box;
+  padding: 12px 16px 13px;
+  border: 1px solid rgba(190, 220, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(5, 6, 10, 0.66);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: rgba(190, 220, 255, 0.66);
+  font-size: 13px;
+  line-height: 1.5;
+  pointer-events: none;
+  user-select: none;
+}
+#guide[hidden] { display: none; }
+#guide h1 {
+  margin: 0 0 4px;
+  color: rgba(222, 236, 255, 0.92);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+#guide p { margin: 0; }
+#guide #status {
+  margin-top: 4px;
+  color: rgba(222, 236, 255, 0.9);
+  font-variant-numeric: tabular-nums;
+}
+#guide kbd {
+  display: inline-block;
+  min-width: 1.1em;
+  padding: 0 4px;
+  border: 1px solid rgba(190, 220, 255, 0.22);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  color: rgba(222, 236, 255, 0.85);
+}
+#guide .narrow { display: none; }
+@media (max-width: 720px), (pointer: coarse) {
+  #guide .wide { display: none; }
+  #guide .narrow { display: block; }
+}
+
+/* ---- the dock: every control as a button, for touch screens and mice ---- */
+#dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  width: max-content;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(100vw - 20px);
+  box-sizing: border-box;
+  padding: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border: 1px solid rgba(190, 220, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(5, 6, 10, 0.66);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0.55;
+  transition: opacity 220ms ease;
+}
+#dock:hover, #dock:focus-within { opacity: 1; }
+@media (pointer: coarse) { #dock { opacity: 1; } }
+#dock::-webkit-scrollbar { display: none; }
+#dock button {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(222, 236, 255, 0.85);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+#dock button:hover { background: rgba(190, 220, 255, 0.08); }
+#dock button:focus-visible { outline: 2px solid #7fb3b8; outline-offset: 1px; }
+#dock button[aria-pressed="true"] {
+  border-color: rgba(190, 220, 255, 0.28);
+  background: rgba(190, 220, 255, 0.1);
+  color: #fff;
+}
+#dock .sep { flex: none; width: 1px; height: 18px; margin: 0 4px; background: rgba(190, 220, 255, 0.16); }
+@media (max-width: 720px) {
+  #dock { left: 10px; right: 10px; width: auto; margin: 0; justify-content: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) { #dock { transition: none; } }
+
+/* the system cursor comes back over the guide and the dock */
+#dock, #dock button { cursor: pointer; }
