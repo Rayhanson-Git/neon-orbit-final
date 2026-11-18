@@ -10,22 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          UA='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36'
-          check() {
-            url="$1"; marker="$2"
-            res=$(curl -sL -A "$UA" -o /tmp/body -w '%{http_code} %{content_type} %{size_download}B' --max-time 30 "$url")
-            if grep -q -- "$marker" /tmp/body; then m=yes; else m=no; fi
-            echo "::notice title=$url::$res | marker '$marker': $m"
-          }
-          check https://orbit-playground.rayhanson.tech/sketch.js 'SHAPES'
-          check https://neon-orbit.rayhanson.tech/sketch.js 'NEBULA'
-          check https://neon-orbit.rayhanson.tech/favicon.svg 'svg'
-          check https://wasp-dodge.rayhanson.tech/fonts/Righteous-Regular.ttf ''
-          check https://gesture-particles.rayhanson.tech/favicon.svg 'svg'
-          check https://gesture-particles.rayhanson.tech/Gesture-Particles/favicon.svg 'svg'
-          check https://virtual-theremin.rayhanson.tech/favicon.svg 'svg'
-          check https://virtual-theremin.rayhanson.tech/Virtual-Theremin/favicon.svg 'svg'
-          check https://rayhanson.tech/Gesture-Particles/favicon.svg 'svg'
-          check https://rayhanson.tech/Virtual-Theremin/favicon.svg 'svg'
-          check https://rayhanson.tech/projects/virtual-theremin/ 'Start with the camera'
-          check https://neon-orbit.rayhanson.tech/ 'dock-nebula'
+          sleep 120
+          for url in https://gesture-particles.rayhanson.tech/assets/index-B0_gx8Og.js https://virtual-theremin.rayhanson.tech/assets/index-DvkE8z8F.js https://rayhanson.tech/projects/wasp-dodge/index.html; do
+            res=$(curl -sL -o /dev/null -w '%{http_code} %{content_type}' --max-time 30 "$url")
+            echo "::notice title=$url::$res"
+          done
