@@ -1,0 +1,24 @@
+# One-off: GitHub Pages was set to publish from /docs, which does not exist, so
+# every Pages build failed. This switches the source to main / (root).
+# It runs once on push and is deleted right after.
+name: Fix Pages source
+on:
+  push:
+    paths: ['.github/workflows/fix-pages-source.yml']
+permissions:
+  contents: read
+  pages: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Current Pages settings
+        run: gh api repos/${{ github.repository }}/pages
+      - name: Publish from main, root
+        run: gh api -X PUT repos/${{ github.repository }}/pages -f 'source[branch]=main' -f 'source[path]=/'
+      - name: New Pages settings
+        run: gh api repos/${{ github.repository }}/pages
+      - name: Rebuild
+        run: gh api -X POST repos/${{ github.repository }}/pages/builds
